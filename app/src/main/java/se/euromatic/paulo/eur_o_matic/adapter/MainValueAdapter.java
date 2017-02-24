@@ -22,6 +22,8 @@ import se.euromatic.paulo.eur_o_matic.objects.Helper;
 
 public class MainValueAdapter extends RecyclerView.Adapter<MainValueAdapter.ViewHolder> {
 
+    public static final String VALUE_CODE = "value_code";
+
     private Context context;
     private LayoutInflater inflater;
     private List<ExchangeObject> exchangeObjectList;
@@ -30,7 +32,6 @@ public class MainValueAdapter extends RecyclerView.Adapter<MainValueAdapter.View
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.exchangeObjectList = Helper.getExchangeObjectArrayList();
-        Log.d("AdapterList","list: " + exchangeObjectList.size());
     }
 
     @Override
@@ -81,7 +82,9 @@ public class MainValueAdapter extends RecyclerView.Adapter<MainValueAdapter.View
 
                 case R.id.relativeLayoutMainContainer:
                     Toast.makeText(context, "Position: " + position + " code: " + exchangeObject.getValueCode(), Toast.LENGTH_LONG).show();
-                    context.startActivity(new Intent(context, HistoryActivity.class));
+                    Intent intent = new Intent(context, HistoryActivity.class);
+                    intent.putExtra(VALUE_CODE, exchangeObject.getValueCode());
+                    context.startActivity(intent);
                     break;
             }
 

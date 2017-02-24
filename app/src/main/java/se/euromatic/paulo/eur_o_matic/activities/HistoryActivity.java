@@ -9,9 +9,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -21,19 +24,29 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import se.euromatic.paulo.eur_o_matic.R;
+import se.euromatic.paulo.eur_o_matic.adapter.HistoryAdapter;
+import se.euromatic.paulo.eur_o_matic.adapter.MainValueAdapter;
+import se.euromatic.paulo.eur_o_matic.objects.ExchangeObject;
+import se.euromatic.paulo.eur_o_matic.objects.Helper;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    private final static String CURRENCY_BASE = "http://api.fixer.io/latest?base=";
+    @BindView(R.id.recyclerViewHistoryValues)  RecyclerView recyclerViewHistoryValues;
+    @BindView(R.id.textViewCode)  TextView textViewCode;
+
     private final static String CURRENCY_BASE_HISTORY = "http://api.fixer.io/";  // "http://api.fixer.io/" + date + "?" + "symbols=" + code
 
-    ArrayList<String> RetroactiveDates;
+    ArrayList<ExchangeObject> RetroactiveDates;
+    private RecyclerView.LayoutManager layoutManager;
+    private HistoryAdapter historyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +54,24 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
 
-        getAllDates(5);
-        getHistoricalValuesFromCode("2017-01-20", "CAD");
+        textViewCode.setText(getBundleExtraFromIntent());
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Helper.exchangeObjectHistoricList.clear();
+                getAllDates(10);
+            }
+        });
 
+
+        historyAdapter = new HistoryAdapter(this);
+        historyAdapter.notifyDataSetChanged();
+        layoutManager = new LinearLayoutManager(this);
+        recyclerViewHistoryValues.setHasFixedSize(true);
+        recyclerViewHistoryValues.setLayoutManager(layoutManager);
+        recyclerViewHistoryValues.setAdapter(historyAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -58,31 +85,48 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
 
-    public void getAllDates(int days){
-
-        for (int i = 0; i < days ; i++) {
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.DATE,-i);
-            java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(this);
-
-            String date = dateFormat.format(cal.getTime());
-            Log.d("DateCalendar", "date: " + date);
+    public String getBundleExtraFromIntent() {
+        String getExtra = "No Value";
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            getExtra = extras.getString(MainValueAdapter.VALUE_CODE);
         }
 
+        return getExtra;
+    }
+
+
+    public void getAllDates(int days) {
+
+        for (int i = 0; i <= days; i++) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -i);
+            java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(this);
+            final String date = dateFormat.format(cal.getTime());
+
+            getHistoricalValuesFromCode(date);
+
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                }
+//            });
+
+            Log.d("DateCalendar", "date: " + date);
+        }
 
 
     }
 
 
-
-
-    public void getHistoricalValuesFromCode(String date, String code){
+    public void getHistoricalValuesFromCode(String date) {
 
         if (isNetworkAvailable()) {
 
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(CURRENCY_BASE_HISTORY  + date + "?" + "symbols=" + code)
+                    .url(CURRENCY_BASE_HISTORY + date + "?" + "symbols=" + getBundleExtraFromIntent())
                     .build();
 
             Call call = client.newCall(request);
@@ -102,7 +146,7 @@ public class HistoryActivity extends AppCompatActivity {
 
                     String jsonData = response.body().string();
 
-                    if(response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         Log.d("exchange_info", "SUCCESS: " + jsonData);
 
                         try {
@@ -111,32 +155,20 @@ public class HistoryActivity extends AppCompatActivity {
                             final JSONObject rates = jsonDataObject.getJSONObject("rates");
 
                             String date = jsonDataObject.getString("date");
-
                             Log.d("JasonDate", " Date: " + date);
-
-
-
+                            Helper.exchangeObjectHistoricList.add(new ExchangeObject(date,rates.getDouble(getBundleExtraFromIntent())));
+                            Helper.getExchangeObjectHistoricList();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
-                    }else{
-
                     }
-
                 }
             });
 
-
-        }else {
+        } else {
             Toast.makeText(HistoryActivity.this, "Network is not available! Check your connections..", Toast.LENGTH_LONG).show();
         }
-
-
-
-
     }
 
 
@@ -154,7 +186,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         return isAvailable;
     }
-
 
 
 }

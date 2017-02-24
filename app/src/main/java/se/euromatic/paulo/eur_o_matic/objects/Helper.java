@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Helper {
 
     private static ArrayList<ExchangeObject> exchangeObjectArrayList = new ArrayList<>();
-    private static ArrayList<ExchangeObject> exchangeObjectHistoricList = new ArrayList<>();
+    public static ArrayList<ExchangeObject> exchangeObjectHistoricList = new ArrayList<>();
 
 
     private static final String AUD = "AUD";
@@ -124,7 +124,13 @@ public class Helper {
     }
 
     public static ArrayList<ExchangeObject> getExchangeObjectArrayList(){
+        Log.d("MAIN_RATE","LIST: " + exchangeObjectArrayList.size());
         return exchangeObjectArrayList;
+    }
+
+    public static ArrayList<ExchangeObject> getExchangeObjectHistoricList(){
+        Log.d("HISTORY","H: " + exchangeObjectHistoricList.size());
+        return exchangeObjectHistoricList;
     }
 
 }

@@ -31,10 +31,7 @@ import se.euromatic.paulo.eur_o_matic.objects.Helper;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.recyclerViewMainValues)
-    RecyclerView recyclerViewMainValues;
-
-    private HashMap<String, Double> exchangeObjectListMap;
+    @BindView(R.id.recyclerViewMainValues)  RecyclerView recyclerViewMainValues;
 
     private MainValueAdapter valueAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -54,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerViewMainValues.setHasFixedSize(true);
         recyclerViewMainValues.setLayoutManager(layoutManager);
-
         recyclerViewMainValues.setAdapter(valueAdapter);
 
     }
@@ -87,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
 
-                    exchangeObjectListMap = new HashMap<>();
                     String jsonData = response.body().string();
 
                     if (response.isSuccessful()) {
@@ -108,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
                                     valueAdapter.notifyDataSetChanged();
                                 }
                             });
-
-                            Log.d("exchange_info", "HashCode: " + exchangeObjectListMap.toString());
 
 
                         } catch (JSONException e) {

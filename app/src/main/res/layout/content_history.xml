@@ -9,9 +9,46 @@
     tools:context="se.euromatic.paulo.eur_o_matic.activities.HistoryActivity"
     tools:showIn="@layout/activity_history">
 
+    <RelativeLayout
+        android:id="@+id/relativeLayoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/textViewHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold|italic"
+            android:text="@string/history"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/textViewCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:textSize="40sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold|italic"
+            android:layout_toRightOf="@id/textViewHistory"
+            android:layout_toEndOf="@id/textViewHistory"
+            android:text="@string/value_code"/>
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewHistoryValues"
         android:scrollbars="vertical"
+        android:layout_below="@id/relativeLayoutHeader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

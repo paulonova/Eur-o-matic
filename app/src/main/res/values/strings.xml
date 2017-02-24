@@ -37,4 +37,5 @@
         <item>ZAR</item>
     </string-array>
     <string name="title_activity_history">HistoryActivity</string>
+    <string name="history">HISTORY:</string>
 </resources>
