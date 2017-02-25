@@ -34,7 +34,6 @@ public class ExchangeObject implements Comparator<ExchangeObject> {
     }
 
 
-
     public String getValueCode() {
         return valueCode;
     }

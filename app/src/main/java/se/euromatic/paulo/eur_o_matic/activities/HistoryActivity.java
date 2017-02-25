@@ -45,9 +45,8 @@ public class HistoryActivity extends AppCompatActivity {
     @BindView(R.id.recyclerViewHistoryValues)  RecyclerView recyclerViewHistoryValues;
     @BindView(R.id.textViewCode)  TextView textViewCode;
 
-    private final static String CURRENCY_BASE_HISTORY = "http://api.fixer.io/";  // "http://api.fixer.io/" + date + "?" + "symbols=" + code
+    private final static String CURRENCY_BASE_HISTORY = "http://api.fixer.io/";
 
-    ArrayList<ExchangeObject> RetroactiveDates;
     private RecyclerView.LayoutManager layoutManager;
     private HistoryAdapter historyAdapter;
     private ProgressDialog progressDialog;
@@ -161,7 +160,6 @@ public class HistoryActivity extends AppCompatActivity {
                             String date = jsonDataObject.getString("date");
                             Log.d("JasonDate", " Date: " + date);
                             Helper.exchangeObjectHistoricList.add(new ExchangeObject(rates.getDouble(getBundleExtraFromIntent()),date));
-                            Helper.getExchangeObjectHistoricList();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {

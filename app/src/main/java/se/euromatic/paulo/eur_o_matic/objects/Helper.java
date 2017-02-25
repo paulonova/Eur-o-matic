@@ -1,12 +1,9 @@
 package se.euromatic.paulo.eur_o_matic.objects;
 
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 /** * Created by Paulo Vila Nova on 2017-02-23.
  */
@@ -119,22 +116,19 @@ public class Helper {
         exchangeObjectArrayList.add(new ExchangeObject(USD, usd ));
         exchangeObjectArrayList.add(new ExchangeObject(ZAR, zar ));
 
-        //Collections.sort(exchangeObjectHistoricList, new ExchangeObject());
-
-        Log.d("ARRAY_TEST", " test: " + exchangeObjectArrayList.size());
-
+        //Log.d("ARRAY_TEST", " test: " + exchangeObjectArrayList.size());
 
     }
 
 
 
     public static ArrayList<ExchangeObject> getExchangeObjectArrayList(){
-        Log.d("MAIN_RATE","LIST: " + exchangeObjectArrayList.size());
+        //Log.d("MAIN_RATE","LIST: " + exchangeObjectArrayList.size());
         return exchangeObjectArrayList;
     }
 
     public static ArrayList<ExchangeObject> getExchangeObjectHistoricList(){
-        Log.d("HISTORY","H: " + exchangeObjectHistoricList.size());
+        //Log.d("HISTORY","H: " + exchangeObjectHistoricList.size());
         return exchangeObjectHistoricList;
     }
 
