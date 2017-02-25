@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.util.List;
 import se.euromatic.paulo.eur_o_matic.R;
@@ -20,6 +21,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
     private Context context;
     private LayoutInflater inflater;
     private List<ExchangeObject> retroactiveDates;
+
 
     public HistoryAdapter(Context context) {
         this.context = context;

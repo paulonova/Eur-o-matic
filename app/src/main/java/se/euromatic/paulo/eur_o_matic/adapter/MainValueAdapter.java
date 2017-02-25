@@ -81,7 +81,7 @@ public class MainValueAdapter extends RecyclerView.Adapter<MainValueAdapter.View
             switch (view.getId()){
 
                 case R.id.relativeLayoutMainContainer:
-                    Toast.makeText(context, "Position: " + position + " code: " + exchangeObject.getValueCode(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, "Position: " + position + " code: " + exchangeObject.getValueCode(), Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(context, HistoryActivity.class);
                     intent.putExtra(VALUE_CODE, exchangeObject.getValueCode());
                     context.startActivity(intent);

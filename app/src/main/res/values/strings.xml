@@ -38,4 +38,5 @@
     </string-array>
     <string name="title_activity_history">HistoryActivity</string>
     <string name="history">HISTORY:</string>
+    <string name="history_load">History loading..</string>
 </resources>

@@ -1,5 +1,6 @@
 package se.euromatic.paulo.eur_o_matic.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.icu.text.DateFormat;
 import android.icu.text.RelativeDateTimeFormatter;
@@ -14,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,7 @@ public class HistoryActivity extends AppCompatActivity {
     ArrayList<ExchangeObject> RetroactiveDates;
     private RecyclerView.LayoutManager layoutManager;
     private HistoryAdapter historyAdapter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,11 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.history_load));
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
 
         historyAdapter = new HistoryAdapter(this);
         historyAdapter.notifyDataSetChanged();
@@ -77,8 +85,8 @@ public class HistoryActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(HistoryActivity.this, "10 more rates were added!", Toast.LENGTH_SHORT).show();
+                getAllDates(10);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -155,6 +163,9 @@ public class HistoryActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     historyAdapter.notifyDataSetChanged();
+                                    if(progressDialog.isShowing()){
+                                        progressDialog.dismiss();
+                                    }
                                 }
                             });
 
