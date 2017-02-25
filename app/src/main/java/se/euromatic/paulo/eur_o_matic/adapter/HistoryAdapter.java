@@ -38,7 +38,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         ExchangeObject historyObject = retroactiveDates.get(position);
 
         holder.circleImgHistoryLogo.setImageResource(R.drawable.history_logo);
-        holder.textViewDate.setText(historyObject.getValueCode());
+//        holder.textViewDate.setText(historyObject.getValueCode());
+        holder.textViewDate.setText(historyObject.getDate());
         holder.textViewHistoryRates.setText(historyObject.getValueRate() + "");
 
     }

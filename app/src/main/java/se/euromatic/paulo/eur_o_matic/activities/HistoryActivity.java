@@ -98,20 +98,13 @@ public class HistoryActivity extends AppCompatActivity {
 
     public void getAllDates(int days) {
 
-        for (int i = 0; i <= days; i++) {
+        for (int i = 1; i <= days; i++) {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DATE, -i);
             java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(this);
             final String date = dateFormat.format(cal.getTime());
 
             getHistoricalValuesFromCode(date);
-
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                }
-//            });
 
             Log.d("DateCalendar", "date: " + date);
         }
@@ -156,8 +149,15 @@ public class HistoryActivity extends AppCompatActivity {
 
                             String date = jsonDataObject.getString("date");
                             Log.d("JasonDate", " Date: " + date);
-                            Helper.exchangeObjectHistoricList.add(new ExchangeObject(date,rates.getDouble(getBundleExtraFromIntent())));
+                            Helper.exchangeObjectHistoricList.add(new ExchangeObject(rates.getDouble(getBundleExtraFromIntent()),date));
                             Helper.getExchangeObjectHistoricList();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    historyAdapter.notifyDataSetChanged();
+                                }
+                            });
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
