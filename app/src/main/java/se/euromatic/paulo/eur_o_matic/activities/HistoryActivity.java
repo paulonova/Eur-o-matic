@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -164,6 +165,8 @@ public class HistoryActivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    Collections.sort(Helper.exchangeObjectHistoricList, new ExchangeObject());
+                                    Collections.reverse(Helper.exchangeObjectHistoricList);
                                     historyAdapter.notifyDataSetChanged();
                                     if(progressDialog.isShowing()){
                                         progressDialog.dismiss();

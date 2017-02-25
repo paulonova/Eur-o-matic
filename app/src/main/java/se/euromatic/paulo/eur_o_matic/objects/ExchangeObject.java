@@ -1,9 +1,11 @@
 package se.euromatic.paulo.eur_o_matic.objects;
 
+import java.util.Comparator;
+
 /** * Created by Paulo Vila Nova on 2017-02-23.
  */
 
-public class ExchangeObject {
+public class ExchangeObject implements Comparator<ExchangeObject> {
 
     private String valueCode;
     private double valueRate;
@@ -23,6 +25,15 @@ public class ExchangeObject {
         this.valueRate = valueRate;
         this.date = date;
     }
+
+    @Override
+    public int compare(ExchangeObject exchangeObject, ExchangeObject t1) {
+
+        return exchangeObject.getDate().compareTo(t1.getDate());
+
+    }
+
+
 
     public String getValueCode() {
         return valueCode;
@@ -55,4 +66,7 @@ public class ExchangeObject {
     public void setDate(String date) {
         this.date = date;
     }
+
+
+
 }
