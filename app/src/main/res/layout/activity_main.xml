@@ -4,12 +4,48 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="5dp"
     tools:context="se.euromatic.paulo.eur_o_matic.activities.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold|italic"
+            android:text="@string/date"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/textViewActualDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:textSize="40sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold|italic"
+            android:layout_toRightOf="@id/textViewDate"
+            android:layout_toEndOf="@id/textViewDate"
+            android:text="@string/actual_date"/>
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewMainValues"
         android:scrollbars="vertical"
+        android:layout_below="@id/relativeLayoutHeader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -86,7 +86,9 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(HistoryActivity.this, "10 more rates were added!", Toast.LENGTH_SHORT).show();
-                getAllDates(10);
+                int number = Helper.exchangeObjectHistoricList.size() + 10;
+                Helper.exchangeObjectHistoricList.clear();
+                getAllDates(number);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

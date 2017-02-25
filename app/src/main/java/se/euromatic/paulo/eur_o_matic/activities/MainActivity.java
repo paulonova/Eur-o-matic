@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -15,6 +16,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -32,6 +34,7 @@ import se.euromatic.paulo.eur_o_matic.objects.Helper;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerViewMainValues)  RecyclerView recyclerViewMainValues;
+    @BindView(R.id.textViewActualDate)  TextView textViewActualDate;
 
     private MainValueAdapter valueAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        textViewActualDate.setText(getActualDate());
         getExchangeValues();
 
         valueAdapter = new MainValueAdapter(this);
@@ -53,6 +57,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewMainValues.setLayoutManager(layoutManager);
         recyclerViewMainValues.setAdapter(valueAdapter);
 
+    }
+
+
+    public String getActualDate(){
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 0);
+        java.text.DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(this);
+        final String date = dateFormat.format(cal.getTime());
+        return date;
     }
 
 

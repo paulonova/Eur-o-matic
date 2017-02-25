@@ -44,7 +44,7 @@ public class MainValueAdapter extends RecyclerView.Adapter<MainValueAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         ExchangeObject exchangeObject = exchangeObjectList.get(position);
 
-        holder.circleImgMoneyLogo.setImageResource(R.drawable.money);
+        holder.circleImgMoneyLogo.setImageResource(R.drawable.ic_european_union);
         holder.textViewValueCode.setText(exchangeObject.getValueCode());
         holder.textViewExchangeRates.setText(exchangeObject.getValueRate() + "");
 
